@@ -8,13 +8,19 @@ LDFLAGS = `pkg-config --libs ${PKGS} glib-2.0 gobject-2.0`
 VALAOPTS = --vapidir="." $(addprefix --pkg ,${PKGS})
 
 VALAC = valac
-CC = cc
+CC = gcc
 RM = rm -vf
 
-all: ${TARGET}
+ifeq ($(OS),Windows_NT)
+    EXEEXT = .exe
+else
+    EXEEXT = 
+endif
+
+all: ${TARGET}${EXEEXT}
 
 clean:
-	@${RM} ${TARGET} *.o *.c *.h *.H *.vapi
+	@${RM} ${TARGET}${EXEEXT} *.o *.c *.h *.H *.vapi
 
 %.c: %.vala
 	@echo 'VALAC $<'
@@ -27,6 +33,6 @@ clean:
 
 .SECONDARY: $(addsuffix .c,${SOURCES})
 
-${TARGET}: $(addsuffix .o,${SOURCES})
+${TARGET}${EXEEXT}: $(addsuffix .o,${SOURCES})
 	@echo 'LD    $@'
 	@${CC} -o $@ $^ ${LDFLAGS}
