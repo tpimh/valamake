@@ -3,8 +3,8 @@ TARGET = animals
 SOURCES = animal cat dog mouse main
 PKGS = gee-0.8
 
-CFLAGS = -w -I. `pkg-config --cflags gee-0.8 glib-2.0 gobject-2.0`
-LDFLAGS = `pkg-config --libs gee-0.8 glib-2.0 gobject-2.0`
+CFLAGS = -w -I. `pkg-config --cflags ${PKGS} glib-2.0 gobject-2.0`
+LDFLAGS = `pkg-config --libs ${PKGS} glib-2.0 gobject-2.0`
 VALAOPTS = --vapidir="." $(addprefix --pkg ,${PKGS})
 
 VALAC = valac
@@ -27,6 +27,6 @@ clean:
 
 .SECONDARY: $(addsuffix .c,${SOURCES})
 
-animals: $(addsuffix .o,${SOURCES})
+${TARGET}: $(addsuffix .o,${SOURCES})
 	@echo 'LD    $@'
 	@${CC} -o $@ $^ ${LDFLAGS}
