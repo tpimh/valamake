@@ -1,0 +1,6 @@
+animals
+*.o
+*.c
+*.h
+*.H
+*.vapi
