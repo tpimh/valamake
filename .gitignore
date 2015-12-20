@@ -1,4 +1,5 @@
 animals
+animals.exe
 *.o
 *.c
 *.h
